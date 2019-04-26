@@ -1,6 +1,9 @@
 # Vim temp files
 *~
 
+# VS Code config
+.vscode
+
 # Ignore /dist build folder
 /dist/*
 
