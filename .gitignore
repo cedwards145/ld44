@@ -1,3 +1,6 @@
+# Vim temp files
+*~
+
 # Ignore /dist build folder
 /dist/*
 
