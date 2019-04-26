@@ -1,0 +1,28 @@
+{
+  "name": "ld44",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jslint": "^0.12.1",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1"
+  },
+  "scripts": {
+    "start": "index.html",
+    "lint": "jslint --browser src/*",
+    "dev": "webpack --mode=development && npm run start",
+    "build": "npm run lint && webpack --mode=production && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cedwards145/ld44.git"
+  },
+  "author": "delish-games",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cedwards145/ld44/issues"
+  },
+  "homepage": "https://github.com/cedwards145/ld44#readme"
+}
