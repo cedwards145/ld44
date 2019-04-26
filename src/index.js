@@ -4,7 +4,8 @@ import { Game } from "./game";
 
 // Main entry point
 (function () {
-    var game = new Game();
+    var canvas = document.getElementById("canvas");
+    var game = new Game(640, 480, canvas);
     var lastTimeStamp = 0;
 
     function main(currentTime) {
