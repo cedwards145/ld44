@@ -7,7 +7,7 @@ class Block extends GameObject {
 
     draw(context) {
         context.fillStyle = "#FFFFFF";
-        context.fillRect(this.x - this.halfWidth, this.y - this.halfHeight, this.width, this.height);
+        context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 

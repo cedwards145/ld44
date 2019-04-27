@@ -16,13 +16,32 @@ class Game {
         var player = new Player(300, 200);
         this.gameObjects.push(player);
 
-        var block = new Block(300, 300);
+        var block = new Block(256, 320);
+        this.gameObjects.push(block);
+
+        block = new Block(320, 320);
+        this.gameObjects.push(block);
+
+        block = new Block(320, 256);
+        this.gameObjects.push(block);
+
+        block = new Block(448, 256);
         this.gameObjects.push(block);
     }
     
     update(deltaTime) {
         for (var i = 0; i < this.gameObjects.length; i++) {
             this.gameObjects[i].update(deltaTime);
+        }
+
+        for (var i = 0; i < this.gameObjects.length; i++) {
+            for (var j = 0; j < this.gameObjects.length; j++) {
+                if (i === j) {
+                    continue;
+                }
+
+                this.gameObjects[i].collideWith(this.gameObjects[j]);
+            }
         }
     }
 
