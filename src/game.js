@@ -19,28 +19,43 @@ class Game {
         var block = new Block(256, 320);
         this.gameObjects.push(block);
 
+        block = new Block(192, 192);
+        this.gameObjects.push(block);
+
         block = new Block(320, 320);
         this.gameObjects.push(block);
 
         block = new Block(320, 256);
         this.gameObjects.push(block);
 
-        block = new Block(448, 256);
+        block = new Block(448, 192);
         this.gameObjects.push(block);
     }
     
     update(deltaTime) {
+        // Update input, AI, game logic
         for (var i = 0; i < this.gameObjects.length; i++) {
             this.gameObjects[i].update(deltaTime);
         }
+        // Resolve horizontal collisions (no vertical collisions without physics)
+        this.resolveCollisions(1, 0);
+        
+        // Update physics
+        for (var i = 0; i < this.gameObjects.length; i++) {
+            this.gameObjects[i].updatePhysics(deltaTime);
+        }
+        // Resolve vertical collisions caused by physics step
+        this.resolveCollisions(0, 1);
+    }
 
+    resolveCollisions(x, y) {
         for (var i = 0; i < this.gameObjects.length; i++) {
             for (var j = 0; j < this.gameObjects.length; j++) {
                 if (i === j) {
                     continue;
                 }
 
-                this.gameObjects[i].collideWith(this.gameObjects[j]);
+                this.gameObjects[i].collideWith(this.gameObjects[j], x, y);
             }
         }
     }

@@ -7,10 +7,10 @@ class Rectangle {
     }
 
     intersects(other) {
-        var r = !(other.x > this.x + this.width ||
-                 other.x + other.width < this.x ||
-                 other.y > this.y + this.height ||
-                 other.y + other.height < this.y);
+        var r = !(other.x >= this.x + this.width ||
+                 other.x + other.width <= this.x ||
+                 other.y >= this.y + this.height ||
+                 other.y + other.height <= this.y);
         return r;
     }
 }

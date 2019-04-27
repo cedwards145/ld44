@@ -15,32 +15,67 @@ class GameObject {
     }
 
     update(deltaTime) {
-        if (this.physicsObject) {
-            this.physics(deltaTime);
-        }
-
         // Keep collision rectangle in sync with object
+        this.updateCollisionRect();
+    }
+
+    updateCollisionRect() {
         this.collisionRect.x = this.x;
         this.collisionRect.y = this.y;
         this.collisionRect.width = this.width;
         this.collisionRect.height = this.height;
     }
 
-    collideWith(other) {
+    collideWith(other, x, y) {
         if (!this.physicsObject) {
             return;
         }
 
+        // Awful collision resolution
         if (this.collisionRect.intersects(other.collisionRect)) {
-            // Hack, come back and fix this!
-            this.y = other.y - this.height;
-            this.velocity = 0;
+            // Horizontal resolution
+            if (x > 0) {
+                if (this.collisionRect.x <= other.collisionRect.x + other.collisionRect.width && 
+                    this.collisionRect.x > other.collisionRect.x) {
+                    // This on Right side of other
+                    this.x = other.collisionRect.x + other.collisionRect.width;
+                }
+                else if (this.collisionRect.x + this.collisionRect.width >= other.x &&
+                         this.collisionRect.x + this.collisionRect.width < other.collisionRect.x + other.collisionRect.width) {
+                    // This on Left side of other
+                    this.x = other.collisionRect.x - this.width;
+                }
+            }
+            // Vertical resolution
+            else if (y > 0) {
+                
+                if (this.collisionRect.y + this.collisionRect.height >= other.collisionRect.y &&
+                    this.collisionRect.y + this.collisionRect.height < other.collisionRect.y + other.collisionRect.height) {
+                    // This above other
+                    this.y = other.collisionRect.y - this.height;
+                }
+                else if (this.collisionRect.y <= other.collisionRect.y + other.collisionRect.height &&
+                    this.collisionRect.y > other.collisionRect.y) {
+                    // This below other
+                    this.y = other.collisionRect.y + other.collisionRect.height;
+                }
+                
+                this.velocity = 0;
+            }
+
+            this.updateCollisionRect();
         }
     }
 
-    physics(deltaTime) {
+    updatePhysics(deltaTime) {
+        if (!this.physicsObject) {
+            return;
+        }
+
         this.velocity += 320 * deltaTime;
         this.y += this.velocity * deltaTime;
+
+        this.updateCollisionRect();
     }
 
     draw(context) { }
