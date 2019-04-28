@@ -9,7 +9,9 @@ class GameObject {
 
         // Physics Init
         this.physicsObject = false;
-        this.velocity = 0
+        this.velocity = 0;
+        // Indicates whether object should be collidable
+        this.solid = true;
 
         this.collisionRect = new Rectangle(this.x, this.y, this.width, this.height);
     }
@@ -27,7 +29,7 @@ class GameObject {
     }
 
     collideWith(other, x, y) {
-        if (!this.physicsObject) {
+        if (!this.physicsObject || !other.solid) {
             return;
         }
 
