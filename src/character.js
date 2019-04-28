@@ -10,12 +10,20 @@ class Character extends GameObject {
         super(x, y, width, height);
         this.setSpriteId(spriteId);
         this.spriteSheet = getResource("img/sprites.png");
+        this.animation = null;
     }
 
     setSpriteId(id) {
         this.spriteId = id;
         this.spriteX = (id % SPRITES_PER_ROW) * SPRITE_WIDTH;
         this.spriteY = Math.floor(id / SPRITES_PER_ROW) * SPRITE_HEIGHT;
+    }
+
+    update(deltaTime) {
+        if (this.animation) {
+            this.animation.update(deltaTime);
+            this.setSpriteId(this.animation.getCurrentFrame());
+        }
     }
 
     draw(context) {
