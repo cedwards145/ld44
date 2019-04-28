@@ -28,6 +28,7 @@ class Character extends GameObject {
         this.animation = null;
         this.physicsObject = true;
         this.weapon = new GameObject(x, y, 16, height);
+        this.isEnemy = false;
 
         // State
         this.state = States.Idle;
@@ -132,17 +133,32 @@ class Character extends GameObject {
     hit(other) {
         if (this.isDamaging() && other.isAlive()) {
             console.log(this + " hits " + other);
-            other.hurt();
+            other.hurtBy(this);
         }
     }
 
-    hurt() {
-        if (this.state !== States.Hurt) {
+    hurtBy(other) {
+        if (this.state !== States.Hurt && !this.blocks(other)) {
             this.currentHealth -= 4;
             this.animation = this.hurtAnimation;
             this.animation.restart();
             this.state = States.Hurt;
         }
+    }
+
+    blocks(other) {
+        if (this.state !== States.Blocking) {
+            return false;
+        }
+
+        // Work out direction of other to this as facing for easier comparison
+        var otherDirection = Facing.Right;
+        if (other.x < this.x) {
+            otherDirection = Facing.Left;
+        }
+
+        // If enemy to left, only block if this faces left and vice versa
+        return otherDirection === this.facing;
     }
 
     collideWith(other, x, y) {
@@ -152,9 +168,11 @@ class Character extends GameObject {
 
         // Run weapon hit check if other is also a character,
         // but don't run super collide method.
-        // Prevents characters colliding with each other
+        // Prevents characters colliding with each other.
+        // Only run check if this and other are on different teams 
+        // (isEnemy is different)
         if (other instanceof Character) {
-            if (this.weapon.intersects(other)) {
+            if (this.isEnemy !== other.isEnemy && this.weapon.intersects(other)) {
                 this.hit(other);
             }
             return;

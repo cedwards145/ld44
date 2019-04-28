@@ -9,6 +9,7 @@ class Enemy extends Character {
     constructor(x, y) {
         super(x, y, 16, 32, 0);
         this.player = Player.instance;
+        this.isEnemy = true;
 
         var myself = this;
         this.attackAnimation = new SpriteAnimation([10, 11, 11, 12, 13], false, function() {
