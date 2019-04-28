@@ -35,10 +35,6 @@ class Game {
     }
     
     update(deltaTime) {
-        if (deltaTime > (1/60)) {
-            console.warn("Slow frame");
-        }
-
         // Update input, AI, game logic
         for (var i = 0; i < this.gameObjects.length; i++) {
             this.gameObjects[i].update(deltaTime);
