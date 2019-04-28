@@ -1,5 +1,6 @@
-import { Character } from "./character";
+import { Character, States } from "./character";
 import { Player } from "./player";
+import { SpriteAnimation } from "./animation";
 
 const ENGAGE_RANGE = 128;
 const ATTACK_RANGE = 24;
@@ -8,6 +9,11 @@ class Enemy extends Character {
     constructor(x, y) {
         super(x, y, 16, 32, 0);
         this.player = Player.instance;
+
+        var myself = this;
+        this.attackAnimation = new SpriteAnimation([10, 11, 11, 12, 13], false, function() {
+            myself.state = States.Idle;
+        });
     }
 
     update(deltaTime) {
