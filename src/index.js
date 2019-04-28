@@ -30,4 +30,9 @@ function run() {
     main();
 }
 
-Resources.loadResource("img/tileset.png", run);
+const resources = [
+    "img/tileset.png",
+    "img/sprites.png"
+];
+
+Resources.loadResource(resources, run);

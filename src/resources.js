@@ -1,13 +1,20 @@
 const resources = {};
 
-function loadResource(path, callback) {
-    var image = new Image();
-    image.onload = function() {
-        resources[path] = this;
-        console.log(resources);
-        callback();
-    };
-    image.src = path;
+function loadResource(paths, callback) {
+    var loaded = 0;
+
+    for (var i = 0; i < paths.length; i++) {
+        var image = new Image();
+        resources[paths[i]] = image;
+
+        image.onload = function() {
+            loaded++;
+            if (loaded == paths.length) {
+                callback();
+            }
+        };
+        image.src = paths[i];
+    }
 }
 function getResource(name) {
     return resources[name];

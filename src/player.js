@@ -21,8 +21,6 @@ class Player extends GameObject {
         }
 
         super.update(deltaTime);
-
-        console.log(this.x + ", " + this.y);
     }
 
     draw(context) {
