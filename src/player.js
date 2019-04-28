@@ -1,9 +1,9 @@
 import { getKeyDown, Keys } from "./input";
-import { GameObject } from "./gameobject";
+import { Character } from "./character";
 
-class Player extends GameObject {
+class Player extends Character {
     constructor(x, y) {
-        super(x, y, 16, 16);
+        super(x, y, 16, 32, 0);
         this.physicsObject = true;
         this.speed = 64;
     }
@@ -21,11 +21,6 @@ class Player extends GameObject {
         }
 
         super.update(deltaTime);
-    }
-
-    draw(context) {
-        context.fillStyle = "#FFFFFF";
-        context.fillRect(this.x, this.y, this.width, this.height);
     }
 }
 
