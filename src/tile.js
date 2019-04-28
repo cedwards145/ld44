@@ -4,7 +4,7 @@ import { getResource } from "./resources";
 const TILES_PER_ROW = 16;
 
 // IDs of wall tiles that should be marked as collidable
-const SOLID_IDS = [1, 2, 3, 4, 5, 17, 19, 20, 21, 33, 35, 50];
+const SOLID_IDS = [1, 2, 3, 4, 5, 16, 17, 19, 20, 21, 33, 35, 50];
 
 class Tile extends GameObject {
     constructor(x, y, id) {

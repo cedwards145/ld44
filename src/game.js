@@ -14,13 +14,18 @@ class Game {
 
         this.gameObjects = [];
 
-        var player = new Player(300, 200);
+        var player = new Player(18, 190);
         this.gameObjects.push(player);
 
         for (var i = 0; i < map.layers.length; i++) {
             var layer = map.layers[i];
             for (var j = 0; j < layer.data.length; j++) {
                 var tileId = layer.data[j];
+                // Skip blank tiles
+                if (tileId === 0) {
+                    continue;
+                }
+
                 var x = (j % layer.width) * 16;
                 var y = Math.floor(j / layer.width) * 16;
                 var tile = new Tile(x, y, tileId);
@@ -58,7 +63,7 @@ class Game {
     }
 
     draw() {
-        this.context.fillStyle = "#6495ED";
+        this.context.fillStyle = "#372C53";
         this.context.fillRect(0, 0, this.width, this.height);
 
         for (var i = 0; i < this.gameObjects.length; i++) {
