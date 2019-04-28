@@ -13,40 +13,21 @@ class Player extends Character {
     }
 
     update(deltaTime) {
-        if (this.state !== States.Attacking) {
-            if (getKeyDown(Keys.Shift)) {
-                this.animation = this.blockAnimation;
-                this.state = States.Blocking;
-            }
-            else if (getKeyDown(Keys.Space)) {
-                this.animation = this.attackAnimation;
-                this.state = States.Attacking
-                this.attackAnimation.restart();
-            }
-            else if (getKeyDown(Keys.D)) {
-                this.x += this.speed * deltaTime;
-                this.animation = this.runAnimation;
-                this.state = States.Moving;
-                this.facing = Facing.Right;
-            }
-            else if (getKeyDown(Keys.A)) {
-                this.x -= this.speed * deltaTime;
-                this.animation = this.runAnimation;
-                this.state = States.Moving;
-                this.facing = Facing.Left;
-            }
-            else {
-                this.animation = this.idleAnimation;
-                this.state = States.Idle;
-            }
-            
-            if (getKeyDown(Keys.W)) {
-                this.velocity = -160;
-            }
-        }
+        this.block = false;
+        this.attack = false;
+        this.moveDirection = 0;
 
-        if (this.state === States.Moving && this.oldState !== States.Moving) {
-            this.runAnimation.restart();
+        if (getKeyDown(Keys.Shift)) {
+            this.block = true;
+        }
+        else if (getKeyDown(Keys.Space)) {
+            this.attack = true;
+        }
+        else if (getKeyDown(Keys.D)) {
+            this.moveDirection = 1;
+        }
+        else if (getKeyDown(Keys.A)) {
+            this.moveDirection = -1;
         }
 
         super.update(deltaTime);

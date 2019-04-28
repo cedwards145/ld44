@@ -34,6 +34,7 @@ class Character extends GameObject {
         this.maxHealth = 10;
         this.currentHealth = this.maxHealth;
 
+        this.moveDirection = 0;
         this.facing = Facing.Right;
 
         // Animations
@@ -65,11 +66,48 @@ class Character extends GameObject {
             return;
         }
 
+        // Update animation
         if (this.animation) {
             this.animation.update(deltaTime);
             this.setSpriteId(this.animation.getCurrentFrame());
         }
 
+        // Movement, Attack and Idle logic
+        if (this.state !== States.Attacking && this.state !== States.Hurt) {
+            if (this.block) {
+                this.animation = this.blockAnimation;
+                this.state = States.Blocking;
+            }
+            else if (this.attack) {
+                this.animation = this.attackAnimation;
+                this.state = States.Attacking
+                this.attackAnimation.restart();
+            }
+            else if (this.moveDirection > 0) {
+                this.x += this.speed * deltaTime;
+                this.animation = this.runAnimation;
+                this.state = States.Moving;
+                this.facing = Facing.Right;
+            }
+            else if (this.moveDirection < 0) {
+                this.x -= this.speed * deltaTime;
+                this.animation = this.runAnimation;
+                this.state = States.Moving;
+                this.facing = Facing.Left;
+            }
+            else {
+                this.animation = this.idleAnimation;
+                this.state = States.Idle;
+            }
+        }
+
+        // Only restart the movement animation if the character has just
+        // transitioned into the state from something else
+        if (this.state === States.Moving && this.oldState !== States.Moving) {
+            this.runAnimation.restart();
+        }
+
+        // Update weapon hitbox
         if (this.facing === Facing.Right) {
             this.weapon.x = this.x + this.width;
         }
@@ -78,10 +116,7 @@ class Character extends GameObject {
         }
         this.weapon.y = this.y;
 
-        if (this.state === States.Idle) {
-            this.animation = this.idleAnimation;
-        }
-
+        // Record current state as old state
         this.oldState = this.state;
     }
 
