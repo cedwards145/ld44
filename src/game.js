@@ -1,5 +1,6 @@
 import { Player } from "./player";
-import { Block } from "./block";
+import { Tile } from "./tile";
+import map from "../maps/testmap.json";
 
 class Game {
     constructor(width, height, canvas) {
@@ -16,20 +17,16 @@ class Game {
         var player = new Player(300, 200);
         this.gameObjects.push(player);
 
-        var block = new Block(256, 320);
-        this.gameObjects.push(block);
-
-        block = new Block(192, 192);
-        this.gameObjects.push(block);
-
-        block = new Block(320, 320);
-        this.gameObjects.push(block);
-
-        block = new Block(320, 256);
-        this.gameObjects.push(block);
-
-        block = new Block(448, 192);
-        this.gameObjects.push(block);
+        for (var i = 0; i < map.layers.length; i++) {
+            var layer = map.layers[i];
+            for (var j = 0; j < layer.data.length; j++) {
+                var tileId = layer.data[j];
+                var x = (j % layer.width) * 16;
+                var y = Math.floor(j / layer.width) * 16;
+                var tile = new Tile(x, y, tileId);
+                this.gameObjects.push(tile);
+            }
+        }
     }
     
     update(deltaTime) {

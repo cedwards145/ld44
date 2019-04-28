@@ -1,10 +1,11 @@
 import { Game } from "./game";
 import * as Input from "./input";
+import * as Resources from "./resources";
 
 "use strict";
 
 // Main entry point
-(function () {
+function run() {
     // Set up input handling
     document.addEventListener('keydown', Input.handleKeyDown, false);
     document.addEventListener('keyup', Input.handleKeyUp, false);
@@ -27,4 +28,6 @@ import * as Input from "./input";
     }
 
     main();
-}());
+}
+
+Resources.loadResource("img/tileset.png", run);
