@@ -28,7 +28,7 @@ class Character extends GameObject {
 
     draw(context) {
         context.drawImage(this.spriteSheet, this.spriteX, this.spriteY, SPRITE_WIDTH, SPRITE_HEIGHT, 
-                          Math.floor(this.x - (SPRITE_WIDTH / 2) + (this.width / 2)), Math.floor(this.y), SPRITE_WIDTH, SPRITE_HEIGHT);
+                          this.x - (SPRITE_WIDTH / 2) + (this.width / 2), this.y, SPRITE_WIDTH, SPRITE_HEIGHT);
     }
 }
 

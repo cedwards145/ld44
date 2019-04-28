@@ -11,7 +11,7 @@ function run() {
     document.addEventListener('keyup', Input.handleKeyUp, false);
 
     var canvas = document.getElementById("canvas");
-    var game = new Game(640, 480, canvas);
+    var game = new Game(1280, 480, canvas);
     var lastTimeStamp = 0;
 
     function main(currentTime) {
