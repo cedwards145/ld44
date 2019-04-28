@@ -1,19 +1,10 @@
 import { getKeyDown, Keys } from "./input";
-import { Character, States } from "./character";
-import { SpriteAnimation } from "./animation";
+import { Character, States, Facing } from "./character";
 
 class Player extends Character {
     constructor(x, y) {
         super(x, y, 16, 32, 0);
         this.speed = 80;
-        this.runAnimation = new SpriteAnimation([0, 1, 2, 3, 4, 5]);
-        this.idleAnimation = new SpriteAnimation([0]);
-        this.blockAnimation = new SpriteAnimation([7]);
-
-        var myself = this;
-        this.attackAnimation = new SpriteAnimation([10, 11, 12, 13], false, function() {
-            myself.state = States.Idle;
-        });
     }
 
     isDamaging() {
@@ -36,11 +27,13 @@ class Player extends Character {
                 this.x += this.speed * deltaTime;
                 this.animation = this.runAnimation;
                 this.state = States.Moving;
+                this.facing = Facing.Right;
             }
             else if (getKeyDown(Keys.A)) {
                 this.x -= this.speed * deltaTime;
                 this.animation = this.runAnimation;
                 this.state = States.Moving;
+                this.facing = Facing.Left;
             }
             else {
                 this.animation = this.idleAnimation;
