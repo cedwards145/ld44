@@ -29,11 +29,14 @@ class Character extends GameObject {
         this.physicsObject = true;
         this.weapon = new GameObject(x, y, 16, height);
 
+        // State
         this.state = States.Idle;
         this.oldState = this.state;
         this.maxHealth = 10;
         this.currentHealth = this.maxHealth;
 
+        // Movement stuff
+        this.speed = 80;
         this.moveDirection = 0;
         this.facing = Facing.Right;
 
@@ -44,6 +47,7 @@ class Character extends GameObject {
         
         var myself = this;
 
+        // End animation callbacks
         this.hurtAnimation = new SpriteAnimation([8, 9, 8, 9], false, function() {
             myself.state = States.Idle;
         })
@@ -121,7 +125,8 @@ class Character extends GameObject {
     }
 
     isDamaging() {
-        return false;
+        // Not great, but only deal damage during one specific frame of animation
+        return this.state === States.Attacking && this.spriteId === 12;
     }
 
     hit(other) {

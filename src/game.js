@@ -2,6 +2,7 @@ import { Player } from "./player";
 import { Tile } from "./tile";
 import map from "../maps/testmap.json";
 import { Character } from "./character";
+import { Enemy } from "./enemy";
 
 class Game {
     constructor(width, height, canvas) {
@@ -15,17 +16,22 @@ class Game {
         this.context.imageSmoothingEnabled = false;
 
         this.gameObjects = [];
+
+        // Player instantiated first to make sure Player.instance
+        // singleton is available for other object constructors.
+        // Added last so that it draws above other objects
+        this.player = new Player(18, 190);
         
-        var enemy = new Character(200, 190, 16, 32, 0);
+        var enemy = new Enemy(200, 190);
         this.gameObjects.push(enemy);
 
-        enemy = new Character(260, 190, 16, 32, 0);
+        enemy = new Enemy(260, 190);
         this.gameObjects.push(enemy);
 
-        enemy = new Character(300, 190, 16, 32, 0);
+        enemy = new Enemy(300, 190);
         this.gameObjects.push(enemy);
 
-        enemy = new Character(330, 190, 16, 32, 0);
+        enemy = new Enemy(330, 190);
         this.gameObjects.push(enemy);
         
         for (var i = 0; i < map.layers.length; i++) {
@@ -44,7 +50,6 @@ class Game {
             }
         }
 
-        this.player = new Player(18, 190);
         this.gameObjects.push(this.player);
     }
     

@@ -4,12 +4,10 @@ import { Character, States, Facing } from "./character";
 class Player extends Character {
     constructor(x, y) {
         super(x, y, 16, 32, 0);
-        this.speed = 80;
-    }
 
-    isDamaging() {
-        // Not great, but only deal damage during one specific frame of animation
-        return this.state === States.Attacking && this.spriteId === 12;
+        // Static singleton reference to this player
+        // Not ideal, but easy way for enemies to find player
+        Player.instance = this;
     }
 
     update(deltaTime) {
