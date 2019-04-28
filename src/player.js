@@ -1,18 +1,10 @@
 import { getKeyDown, Keys } from "./input";
-import { Character } from "./character";
+import { Character, States } from "./character";
 import { SpriteAnimation } from "./animation";
-
-const States = {
-    "Idle": 0,
-    "Attacking": 1,
-    "Blocking": 2,
-    "Moving": 3
-};
 
 class Player extends Character {
     constructor(x, y) {
         super(x, y, 16, 32, 0);
-        this.physicsObject = true;
         this.speed = 80;
         this.runAnimation = new SpriteAnimation([0, 1, 2, 3, 4, 5]);
         this.idleAnimation = new SpriteAnimation([0]);
@@ -22,9 +14,11 @@ class Player extends Character {
         this.attackAnimation = new SpriteAnimation([10, 11, 12, 13], false, function() {
             myself.state = States.Idle;
         });
+    }
 
-        this.state = States.Idle;
-        this.oldState = this.state;
+    isDamaging() {
+        // Not great, but only deal damage during one specific frame of animation
+        return this.state === States.Attacking && this.spriteId === 12;
     }
 
     update(deltaTime) {
@@ -61,8 +55,6 @@ class Player extends Character {
         if (this.state === States.Moving && this.oldState !== States.Moving) {
             this.runAnimation.restart();
         }
-
-        this.oldState = this.state;
 
         super.update(deltaTime);
     }

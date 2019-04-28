@@ -1,6 +1,7 @@
 import { Player } from "./player";
 import { Tile } from "./tile";
 import map from "../maps/testmap.json";
+import { Character } from "./character";
 
 class Game {
     constructor(width, height, canvas) {
@@ -14,10 +15,19 @@ class Game {
         this.context.imageSmoothingEnabled = false;
 
         this.gameObjects = [];
+        
+        var enemy = new Character(200, 190, 16, 32, 0);
+        this.gameObjects.push(enemy);
 
-        this.player = new Player(18, 190);
-        this.gameObjects.push(this.player);
+        enemy = new Character(260, 190, 16, 32, 0);
+        this.gameObjects.push(enemy);
 
+        enemy = new Character(300, 190, 16, 32, 0);
+        this.gameObjects.push(enemy);
+
+        enemy = new Character(330, 190, 16, 32, 0);
+        this.gameObjects.push(enemy);
+        
         for (var i = 0; i < map.layers.length; i++) {
             var layer = map.layers[i];
             for (var j = 0; j < layer.data.length; j++) {
@@ -26,13 +36,16 @@ class Game {
                 if (tileId === 0) {
                     continue;
                 }
-
+                
                 var x = (j % layer.width) * 16;
                 var y = Math.floor(j / layer.width) * 16;
                 var tile = new Tile(x, y, tileId);
                 this.gameObjects.push(tile);
             }
         }
+
+        this.player = new Player(18, 190);
+        this.gameObjects.push(this.player);
     }
     
     update(deltaTime) {
