@@ -6,7 +6,8 @@ const Keys = {
     "S": 83,
     "D": 68,
     "E": 69,
-    "Space": 32
+    "Space": 32,
+    "Shift": 16
 }
 
 function getKeyDown(keyCode) {

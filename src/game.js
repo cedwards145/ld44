@@ -53,12 +53,18 @@ class Game {
 
     resolveCollisions(x, y) {
         for (var i = 0; i < this.gameObjects.length; i++) {
+            // Don't bother with second loop if the first game object isn't a physics object
+            var firstGameObject = this.gameObjects[i];
+            if (!firstGameObject.physicsObject) {
+                continue;
+            }
+
             for (var j = 0; j < this.gameObjects.length; j++) {
                 if (i === j) {
                     continue;
                 }
 
-                this.gameObjects[i].collideWith(this.gameObjects[j], x, y);
+                firstGameObject.collideWith(this.gameObjects[j], x, y);
             }
         }
     }
