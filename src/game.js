@@ -14,6 +14,7 @@ class Game {
 
         this.context = canvas.getContext("2d");
         this.context.imageSmoothingEnabled = false;
+        this.context.scale(2, 2);
 
         this.gameObjects = [];
 
@@ -91,14 +92,23 @@ class Game {
         this.context.fillStyle = "#372C53";
         this.context.fillRect(0, 0, this.width, this.height);
 
-        this.context.scale(2, 2);
+        this.context.save();
         this.context.translate(-(this.player.x - (this.width / 4)), 0);
 
         for (var i = 0; i < this.gameObjects.length; i++) {
             this.gameObjects[i].draw(this.context);
         }
 
-        this.context.setTransform(1, 0, 0, 1, 0, 0);
+        this.context.restore();
+        this.drawHealthBar();
+    }
+
+    drawHealthBar() {
+        this.context.fillStyle = "#000000";
+        this.context.fillRect(5, 5, 100, 5);
+        this.context.fillStyle = "#FF0000";
+        var playerHealthPercentage = Math.max(this.player.currentHealth / this.player.maxHealth, 0);
+        this.context.fillRect(6, 6, 98 * playerHealthPercentage, 3);
     }
 }
 
